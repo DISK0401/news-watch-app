@@ -21,6 +21,16 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     flex: 1,
+    flexDirection: 'column',
+    padding: 10,
+    justifyContent: 'space-between',
+  },
+  text: {
+    fontSize: 16,
+  },
+  subText: {
+    fontSize: 12,
+    color: 'gray',
   },
 });
 
@@ -34,7 +44,12 @@ export default function App() {
             source={{ url: 'https://picsum.photos/id/10/200/200' }}
           />
         </View>
-        <View style={styles.rightContainer}></View>
+        <View style={styles.rightContainer}>
+          <Text numberOfLines={3} style={styles.text}>
+            だるまさんがころんだだるまさんがころんだだるまさんがころんだだるまさんがころんだだるまさんがころんだだるまさんがころんだだるまさんがころんだ
+          </Text>
+          <Text style={styles.subText}>TestNews</Text>
+        </View>
       </View>
     </View>
   );
