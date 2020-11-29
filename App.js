@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, FlatList, SafeAreaView } from 'react-native';
 import ListItem from './components/ListItem';
 import dummyArticles from './dummies/articles.json';
+import Constants from 'expo-constants';
+import axios from 'axios';
+
+const URL = `http://newsapi.org/v2/top-headlines?country=jp&apiKey=${Constants.manifest.extra.newsApiKey}`;
 
 const styles = StyleSheet.create({
   container: {
@@ -15,11 +19,19 @@ export default function App() {
   const [articles, setArticles] = useState([]);
   // ロード時に１時度だけ、記事データをセットする
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setArticles(dummyArticles);
-    }, 2000);
-    return () => clearTimeout(timer);
+    fetchAriticles();
   }, []);
+
+  const fetchAriticles = async () => {
+    try {
+      const response = await axios.get(URL);
+      setArticles(response.data.articles);
+      // console.log(response);
+    } catch {
+      console.error(error);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
