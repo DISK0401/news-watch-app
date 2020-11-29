@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, FlatList, SafeAreaView } from 'react-native';
 import ListItem from './components/ListItem';
 import dummyArticles from './dummies/articles.json';
@@ -11,7 +11,15 @@ const styles = StyleSheet.create({
 });
 
 export default function App() {
-  const [articles, setArticles] = useState(dummyArticles);
+  // 初回ロード時は、空データをステートにセットする
+  const [articles, setArticles] = useState([]);
+  // ロード時に１時度だけ、記事データをセットする
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setArticles(dummyArticles);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
@@ -21,9 +29,9 @@ export default function App() {
             imageUrl={item.urlToImage}
             title={item.title}
             author={item.author}
-            keyExtractor={(item, index) => index.toString()}
           />
         )}
+        keyExtractor={(item, index) => index.toString()}
       />
     </SafeAreaView>
   );
