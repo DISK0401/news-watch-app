@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen = () => {
+export default HomeScreen = ({ navigation }) => {
   // 初回ロード時は、空データをステートにセットする
   const [articles, setArticles] = useState([]);
   // ロード時に１時度だけ、記事データをセットする
@@ -40,6 +40,7 @@ export default HomeScreen = () => {
             imageUrl={item.urlToImage}
             title={item.title}
             author={item.author}
+            onPress={() => navigation.navigate('Article')}
           />
         )}
         keyExtractor={(item, index) => index.toString()}
