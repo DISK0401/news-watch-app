@@ -27,6 +27,23 @@ const HomeStack = () => {
   );
 };
 
+const ClipStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Clip"
+        component={ClipScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Article"
+        component={ArticleScreen}
+        options={{ headerShown: true }}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const screenOption = ({ route }) => ({
   tabBarIcon: ({ color, size }) => {
     let iconName;
@@ -45,7 +62,7 @@ export default AppNavigator = () => {
     <NavigationContainer>
       <Tab.Navigator screenOptions={screenOption}>
         <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="Clip" component={ClipScreen} />
+        <Tab.Screen name="Clip" component={ClipStack} />
       </Tab.Navigator>
     </NavigationContainer>
   );
