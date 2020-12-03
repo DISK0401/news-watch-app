@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, FlatList, SafeAreaView } from 'react-native';
 import ListItem from '../components/ListItem';
+import Loading from '../components/Loading';
 import Constants from 'expo-constants';
 import axios from 'axios';
 
@@ -16,12 +17,17 @@ const styles = StyleSheet.create({
 export default HomeScreen = ({ navigation }) => {
   // 初回ロード時は、空データをステートにセットする
   const [articles, setArticles] = useState([]);
+
+  // 記事の読み込みを管理
+  const [loading, setLoading] = useState(false);
+
   // ロード時に１時度だけ、記事データをセットする
   useEffect(() => {
     fetchAriticles();
   }, []);
 
   const fetchAriticles = async () => {
+    setLoading(true);
     try {
       const response = await axios.get(URL);
       setArticles(response.data.articles);
@@ -29,6 +35,7 @@ export default HomeScreen = ({ navigation }) => {
     } catch {
       console.error(error);
     }
+    setLoading(false);
   };
 
   return (
@@ -45,6 +52,7 @@ export default HomeScreen = ({ navigation }) => {
         )}
         keyExtractor={(item, index) => index.toString()}
       />
+      {loading && <Loading />}
     </SafeAreaView>
   );
 };
